@@ -2,17 +2,27 @@
 
 [![Build Status](https://travis-ci.org/bngom/to-do-web-app.svg?branch=master)](https://travis-ci.org/bngom/shopping-list)
 
+Shopping list CRUD Application.
 
-
-Shopping list CRUD RESTful Application.
-
-We will build a full-stack Shopping list CRUD Application.The back-end server uses Node.js + Express for REST APIs. MongoDB is used for the persistence layer.
+We will build a Shopping list CRUD Application.The back-end server uses Node.js + Express for REST APIs. MongoDB is used for the persistence layer.
 
 ## List of all the work performed (briefly, describing features and bonus tasks).
+
+Features: create, update, retrieve, delete an item
+Bonus tasks:...
 
 ## Instruction
 
 - Installation
+
+```
+git clone https://github.com/bngom/shopping-list.git
+```
+From the root directory of the project run:
+```
+npm install
+```
+Lauch tha application
 ```
 npm start
 ```
@@ -54,6 +64,11 @@ Delete one item
 curl --location --request DELETE 'http://localhost:8080/api/item/<ID>'
 ```
 
+Delete all items
+```
+curl --location --request DELETE 'http://localhost:8080/api/item/'
+```
+
 - Testing
 ```
 npm test
@@ -80,25 +95,37 @@ run `vagrant up`
 
 > clone private repo [here](https://community.ibm.com/community/user/ibmz-and-linuxone/blogs/asif-mahmud1/2020/03/15/cloning-private-git-repository-using-ansible)
 
-## Usage
+## Build Docker image 
+
+Check the [Dockerfile](./Dockerfile)
+
+Build the docker image
 
 ```
-npm start
+docker build -t shopping-list_web .
 ```
 
-```
-curl -d "{\"Title\":\"DevOps Assignement\",\"Description\":\"Write a CRUD app\"}" \
--H "Content-Type: application/json" \
--X POST http://localhost:8080/api/item
-```
-
-## Testing
-
-From the root directory of the project run:
+Push docker image to docker registry
 
 ```
-npm test
+docker tag shopping-list_web 230984/shopping-list_web
+docker push 230984/shopping-list_web
 ```
+
+## Docker compose
+
+Check the [docker-compose.yml](./docker-compose.yml) file
+
+```
+docker-compose up
+```
+
+Open a browser on http://localhost:8080 to see the application
+
+This define:
+
+- **shopping-list_web**: which represents our application
+- **mongo**: which represents the persistence layer docker
 
 ## Author
 
