@@ -1,0 +1,34 @@
+{
+  "name": "shopping-list",
+  "version": "1.0.0",
+  "description": "Shopping list CRUD web app",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --recursive --timeout 200000 --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bngom/shopping-list.git"
+  },
+  "author": "Barthelemy NGOM",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bngom/shopping-list/issues"
+  },
+  "homepage": "https://github.com/bngom/shopping-list#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^8.2.0",
+    "mockgoose": "^8.0.4",
+    "mongoose": "^5.10.11",
+    "should": "^13.2.3",
+    "supertest": "^6.0.0"
+  }
+}
