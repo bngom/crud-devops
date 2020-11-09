@@ -1,6 +1,6 @@
 # Shopping list web app
 
-[![Build Status](https://travis-ci.org/bngom/to-do-web-app.svg?branch=master)](https://travis-ci.org/bngom/shopping-list)
+[![bngom](https://circleci.com/gh/bngom/shopping-list.svg?style=svg)](https://app.circleci.com/pipelines/github/bngom/shopping-list)
 
 Shopping list CRUD Application.
 
@@ -74,6 +74,9 @@ curl --location --request DELETE 'http://localhost:8080/api/item/'
 npm test
 ```
 
+## CI/CD pipeline
+
+
 
 ## IaC
 
@@ -122,7 +125,11 @@ docker-compose up
 
 Open a browser on http://localhost:8080 to see the application
 
-This define:
+Look at the running containers
+
+```
+docker ps
+```
 
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
