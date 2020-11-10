@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const Mockgoose = require('mockgoose').Mockgoose;
+const mongoose = require("mongoose");
+const Mockgoose = require("mockgoose").Mockgoose;
 const mockgoose = new Mockgoose(mongoose);
-const DB_URL = process.env.DB_URL || 'mongodb://mongo:27017/shopping-list';
-const DB_URL_TEST = process.env.DB_URL_TEST || 'mongodb://mongo:27017/shopping-list-test';
+const DB_URL = process.env.DB_URL || "mongodb://mongo:27017/shopping-list";
+const DB_URL_TEST = process.env.DB_URL_TEST || "mongodb://mongo:27017/shopping-list-test";
 
 function connect() {
   return new Promise((resolve, reject) => {
-    if (process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV === "test") {
 
     mockgoose.prepareStorage()
       .then(() => {
