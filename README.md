@@ -101,7 +101,7 @@ npm test
 
 Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
 
-![schema](./img/schema.png)
+![schema](./img/schema.PNG)
 
 
 - Prerequisites
