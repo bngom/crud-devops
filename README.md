@@ -101,7 +101,8 @@ npm test
 
 Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
 
-![schema]("./img/schema.PNG")
+![schema](./img/schema.png)
+
 
 - Prerequisites
 
@@ -119,11 +120,11 @@ Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
 
 - Deploy an EC2 instance (T2.micro free tier)
 
-Move to the folder `iac`. The instance will be deployed on **us-esat-2** region. Feel free to change the region in the file [gitlab-runner-instance.tf]("./iac/gitlab-runner-instance.tf"). 
+Move to the folder `iac`. The instance will be deployed on **us-esat-2** region. Feel free to change the region in the file [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf). 
 
 In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ to one region to another.
 
-We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [gitlab-runner-instance.tf]("./iac/gitlab-runner-instance.tf") file.
+We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf) file.
 
 > To do: generate the key pairs with terraform and extract the private key
 
@@ -204,20 +205,20 @@ docker-compose up
 
 Open a browser on [http://localhost:8080](http://localhost:8080) to see the application
 
-![web-app]("./img/app-deployed-weppage.PNG")
+![web-app](./img/app-deployed-weppage.PNG)
 
 Check the running containers
 
 ```
 docker ps
 ```
-![containers]("./img/app-deployed-docker.PNG")
+![containers](./img/app-deployed-docker.PNG)
 
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
 
 ## Author
 
-Barthelemy NGOM 
+Barthelemy NGOM
 
 barthe.ngom@gmail.com
