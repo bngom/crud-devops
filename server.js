@@ -1,8 +1,8 @@
-const app = require('./app.js')
-const db = require('./src/db');
+const app = require("./app.js")
+const db = require("./src/db");
 
 const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || '0.0.0.0';
+const HOST = process.env.HOST || "0.0.0.0";
 
 
 db.connect()
@@ -12,7 +12,7 @@ db.connect()
     })
   })
 .catch(err => {
-    console.log('Cannot connect to the database!', err);
+    console.log("Cannot connect to the database!", err);
     process.exit();
   });
 
