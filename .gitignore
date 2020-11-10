@@ -1,4 +1,14 @@
 .*
-*-lock*
+
+# Dependency directories
 node_modules
+
+# dotenv environment variables file
+.env
+
+# vscode settings folder
+.vscode/
+
+!.gitlab-ci.*
+
 !.gitignore
