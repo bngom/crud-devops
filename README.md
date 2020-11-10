@@ -1,6 +1,6 @@
 # Shopping list web app
 
-[![bngom](https://circleci.com/gh/bngom/shopping-list.svg?style=svg)](https://app.circleci.com/pipelines/github/bngom/shopping-list)
+[![CIRCLECI](https://circleci.com/gh/bngom/shopping-list.svg?style=svg)](https://app.circleci.com/pipelines/github/bngom/shopping-list)
 
 Shopping list CRUD Application.
 
@@ -18,17 +18,23 @@ Bonus tasks:...
 ```
 git clone https://github.com/bngom/shopping-list.git
 ```
+
 From the root directory of the project run:
+
 ```
 npm install
 ```
+
 Lauch tha application
+
 ```
 npm start
 ```
 
 - Usage
+
 Create an item in the shopping list
+
 ```
 curl --location --request POST 'http://localhost:8080/api/item' \
 --header 'Content-Type: application/json' \
@@ -60,22 +66,69 @@ curl --location --request PUT 'http://localhost:8080/api/item/<ID>' \
 ```
 
 Delete one item
+
 ```
 curl --location --request DELETE 'http://localhost:8080/api/item/<ID>'
 ```
 
 Delete all items
+
 ```
 curl --location --request DELETE 'http://localhost:8080/api/item/'
 ```
 
 - Testing
+
 ```
 npm test
 ```
 
 ## CI/CD pipeline
 
+Github -> GitLab <- AWS EC2 Instance(Gitlab Runner)
+
+- Prerequisites
+
+- Deploy an EC2 instance (T2.micro free tier)
+
+```
+terraform init
+```
+
+```
+terraform plan
+```
+
+```
+terraform apply
+```
+
+- Install gitlab-runner on the EC2 instance
+
+Connect to the EC2 instance
+
+```
+ssh -i "ec2-p2.pem" ubuntu@ec2-3-23-63-91.us-east-2.compute.amazonaws.com
+```
+Complete the gitlab-runner installtion
+
+```
+sudo gitlab-runner register
+```
+Follow these [instructions](https://docs.gitlab.com/ee/ci/runners/README.html#specific-runners) to register the runner
+
+Add `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file
+```
+sudo nano /etc/sudoers
+```
+
+> todo: complete the manual setup in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
+
+
+
+* [.gitlab-ci.yml](./.gitlab-ci.yml)
+
+* [docker-compose.yml](./docker-compose.yml)
 
 
 ## IaC
@@ -98,7 +151,7 @@ run `vagrant up`
 
 > clone private repo [here](https://community.ibm.com/community/user/ibmz-and-linuxone/blogs/asif-mahmud1/2020/03/15/cloning-private-git-repository-using-ansible)
 
-## Build Docker image 
+## Build Docker image
 
 Check the [Dockerfile](./Dockerfile)
 
