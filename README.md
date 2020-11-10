@@ -13,7 +13,13 @@ Bonus tasks:...
 
 ## Instruction
 
-- Installation
+- MongoDB
+
+[Install MongoDB]()
+
+- webapp
+
+clone the repository
 
 ```
 git clone https://github.com/bngom/shopping-list.git
@@ -44,17 +50,21 @@ curl --location --request POST 'http://localhost:8080/api/item' \
     "description": "Panzani"
 }'
 ```
+
 Get all created items
+
 ```
 curl --location --request GET 'http://localhost:8080/api/item'
 ```
 
 Get item by id
+
 ```
 curl --location --request GET 'http://localhost:8080/api/item/<ID>'
 ```
 
 Update an item
+
 ```
 curl --location --request PUT 'http://localhost:8080/api/item/<ID>' \
 --header 'Content-Type: application/json' \
@@ -85,9 +95,11 @@ npm test
 
 ## CI/CD pipeline
 
-Github -> GitLab <- AWS EC2 Instance(Gitlab Runner)
+Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)
 
 - Prerequisites
+
+[Install Terraform]()
 
 - Deploy an EC2 instance (T2.micro free tier)
 
@@ -110,14 +122,17 @@ Connect to the EC2 instance
 ```
 ssh -i "ec2-p2.pem" ubuntu@ec2-3-23-63-91.us-east-2.compute.amazonaws.com
 ```
+
 Complete the gitlab-runner installtion
 
 ```
 sudo gitlab-runner register
 ```
+
 Follow these [instructions](https://docs.gitlab.com/ee/ci/runners/README.html#specific-runners) to register the runner
 
 Add `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file
+
 ```
 sudo nano /etc/sudoers
 ```
@@ -125,17 +140,17 @@ sudo nano /etc/sudoers
 > todo: complete the manual setup in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
 
 
-
 * [.gitlab-ci.yml](./.gitlab-ci.yml)
 
 * [docker-compose.yml](./docker-compose.yml)
+
 
 
 ## IaC
 
 Allow Ansible to clone private repository
 
-` echo "godeepdsti!" | openssl aes-256-ecb -a -salt > C:\Users\barth\shopping-list\iac\.ansible_vault.pass`
+`echo "godeepdsti!" | openssl aes-256-ecb -a -salt > C:\Users\barth\shopping-list\iac\.ansible_vault.pass`
 
 
 `ansible-vault encrypt_string '<your_github_access_token>' --name 'GITHUB_ACCESS_TOKEN' --vault-password-file=.ansible_vault.pass`
