@@ -21,7 +21,7 @@ We will build a Shopping list CRUD Application.The back-end server uses Node.js 
 
 [Download](https://www.mongodb.com/try/download/community) and install MongoDB Community Server
 
-- webapp
+- Webapp
 
 clone the repository
 
@@ -193,7 +193,7 @@ Test the api
 
 ![api](./img/postman.PNG)
 
-## IaC
+## Provision the VM with Ansible and Vagrant
 
 ...
 
@@ -229,9 +229,16 @@ Open a browser on [http://localhost:8080](http://localhost:8080) to see the appl
 docker ps
 ```
 
-
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
+
+## Docker orchestration using Kubernetes
+
+...
+
+## Service mesh using Istio
+
+...
 
 ## Author
 
