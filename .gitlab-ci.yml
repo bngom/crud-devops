@@ -11,7 +11,7 @@ step-develop:
   before_script:
     - export DYNAMIC_ENV_VAR=DEV
   only:
-    - dev
+    - master
   tags:
     - dev
   script:
