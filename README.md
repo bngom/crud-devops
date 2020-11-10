@@ -193,8 +193,6 @@ Test the api
 
 ![api](./img/postman.PNG)
 
-
-
 ## IaC
 
 ...
