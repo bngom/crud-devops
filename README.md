@@ -173,6 +173,27 @@ sudo nano /etc/sudoers
 
 > todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
 
+```
+git branch develop
+git branch uat
+```
+
+Trigger the deployment on the ec2 instance
+```
+git checkout uat
+git push
+```
+![webpage](./img/app-deployed-weppage2.PNG)
+
+Connect throught ssh on the ec2 instance and check the running containers
+
+![containers](./img/app-deployed-docker.PNG)
+
+Test the api
+
+![api](./img/postman.PNG)
+
+
 
 ## IaC
 
@@ -194,6 +215,7 @@ Push docker image to docker registry
 docker tag shopping-list_web 230984/shopping-list_web
 docker push 230984/shopping-list_web
 ```
+![registry](./img/docker_registry.PNG)
 
 ## Docker compose
 
@@ -205,14 +227,10 @@ docker-compose up
 
 Open a browser on [http://localhost:8080](http://localhost:8080) to see the application
 
-![web-app](./img/app-deployed-weppage.PNG)
-
-Check the running containers
-
 ```
 docker ps
 ```
-![containers](./img/app-deployed-docker.PNG)
+
 
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
