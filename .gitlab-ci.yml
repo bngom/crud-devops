@@ -4,7 +4,7 @@ services:
 
 stages:
   - test
-  - deploy
+  #- deploy
 
 step-develop:
   stage: test
@@ -16,9 +16,9 @@ step-develop:
     - dev
   script:
     - echo running tests in $DYNAMIC_ENV_VAR
-    - sudo docker image prune -f
-    - sudo docker-compose -f docker-compose.yml build --no-cache
-    - sudo docker-compose -f docker-compose.yml up -d
+    #- sudo docker image prune -f
+    #- sudo docker-compose -f docker-compose.yml build --no-cache
+    #- sudo docker-compose -f docker-compose.yml up -d
 
 # step-uat:
 #   stage: deploy
