@@ -190,8 +190,8 @@ Connect throught ssh on the ec2 instance and check the running containers
 ![containers](./img/app-deployed-docker.PNG)
 
 Test the api
+![api](./img/app-deployed-postman-ec2.PNG)
 
-![api](./img/postman.PNG)
 
 ## Provision the VM with Ansible and Vagrant
 
@@ -215,6 +215,7 @@ docker push 230984/shopping-list_web
 ```
 ![registry](./img/docker_registry.PNG)
 
+
 ## Docker compose
 
 Review the [docker-compose.yml](./docker-compose.yml) file
@@ -231,6 +232,10 @@ docker ps
 
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
+
+Test the local deployment
+
+![api2](./img/postman.PNG)
 
 ## Docker orchestration using Kubernetes
 
