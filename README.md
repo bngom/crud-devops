@@ -1,6 +1,6 @@
 # Shopping list web app
 
-[![CIRCLECI](https://circleci.com/gh/bngom/shopping-list.svg?style=svg)](https://app.circleci.com/pipelines/github/bngom/shopping-list)
+[![gitlab-ci](https://gitlab.com/bngom/shopping-list/badges/uat/pipeline.svg)](https://gitlab.com/bngom/shopping-list)
 
 Shopping list CRUD Application.
 
@@ -8,14 +8,18 @@ We will build a Shopping list CRUD Application.The back-end server uses Node.js 
 
 ## List of all the work performed (briefly, describing features and bonus tasks).
 
-Features: create, update, retrieve, delete an item
-Bonus tasks:...
+- Develop CRUD app: create, update, retrieve, delete an item
+- CI/CD pipeline using: github, gitlab, gitlab runner, terraform, aws ec2 instance
+- Iac using Ansible, Vagrant and Gitlab
+- Kubernetes cluster ...
+- Istio ...
+
 
 ## Instruction
 
 - MongoDB
 
-[Install MongoDB]()
+[Download](https://www.mongodb.com/try/download/community) and install MongoDB Community Server
 
 - webapp
 
@@ -95,25 +99,54 @@ npm test
 
 ## CI/CD pipeline
 
-Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)
+Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
+
+![schema]("./img/schema.PNG")
 
 - Prerequisites
 
-[Install Terraform]()
+[Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform)
+
+- ci/cd workflow and docker-compose
+
+* Review the pipeline configuration file [.gitlab-ci.yml](./.gitlab-ci.yml). In this file we defined the different stages:
+    
+**test**: when develop branch is pushed it trigger the unittest execution.
+
+**deploy**: when uat branch is pushed it trigger the deployment of the app stack to the ec2 instance where the runner is installed.
+
+* Review the file [docker-compose.yml](./docker-compose.yml)
 
 - Deploy an EC2 instance (T2.micro free tier)
+
+Move to the folder `iac`. The instance will be deployed on **us-esat-2** region. Feel free to change the region in the file [gitlab-runner-instance.tf]("./iac/gitlab-runner-instance.tf"). 
+
+In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ to one region to another.
+
+We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [gitlab-runner-instance.tf]("./iac/gitlab-runner-instance.tf") file.
+
+> To do: generate the key pairs with terraform and extract the private key
+
+
+Initialize
 
 ```
 terraform init
 ```
 
+Check the deployment plan
+
 ```
 terraform plan
 ```
 
+Provision an EC2 instance
+
 ```
 terraform apply
 ```
+
+Check on AWS is the instance is correctely provisionned
 
 - Install gitlab-runner on the EC2 instance
 
@@ -137,38 +170,16 @@ Add `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file
 sudo nano /etc/sudoers
 ```
 
-> todo: complete the manual setup in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
-
-
-* [.gitlab-ci.yml](./.gitlab-ci.yml)
-
-* [docker-compose.yml](./docker-compose.yml)
-
+> todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
 
 
 ## IaC
 
-Allow Ansible to clone private repository
-
-`echo "godeepdsti!" | openssl aes-256-ecb -a -salt > C:\Users\barth\shopping-list\iac\.ansible_vault.pass`
-
-
-`ansible-vault encrypt_string '<your_github_access_token>' --name 'GITHUB_ACCESS_TOKEN' --vault-password-file=.ansible_vault.pass`
-
-on windows have to run the above command
-run `vagrant plugin install vagrant-winnfsd`
-
-run `vagrant plugin install vagrant-vbguest`
-
-run `vagrant up`
-
-> [Troobleshoot](https://stackoverflow.com/questions/50053255/virtualbox-raw-mode-is-unavailable-courtesy-of-hyper-v-windows-10)]
-
-> clone private repo [here](https://community.ibm.com/community/user/ibmz-and-linuxone/blogs/asif-mahmud1/2020/03/15/cloning-private-git-repository-using-ansible)
+...
 
 ## Build Docker image
 
-Check the [Dockerfile](./Dockerfile)
+Review the [Dockerfile](./Dockerfile)
 
 Build the docker image
 
@@ -185,19 +196,22 @@ docker push 230984/shopping-list_web
 
 ## Docker compose
 
-Check the [docker-compose.yml](./docker-compose.yml) file
+Review the [docker-compose.yml](./docker-compose.yml) file
 
 ```
 docker-compose up
 ```
 
-Open a browser on http://localhost:8080 to see the application
+Open a browser on [http://localhost:8080](http://localhost:8080) to see the application
 
-Look at the running containers
+![web-app]("./img/app-deployed-weppage.PNG")
+
+Check the running containers
 
 ```
 docker ps
 ```
+![containers]("./img/app-deployed-docker.PNG")
 
 - **shopping-list_web**: which represents our application
 - **mongo**: which represents the persistence layer docker
