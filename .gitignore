@@ -9,6 +9,9 @@ node_modules
 # vscode settings folder
 .vscode/
 
+# keys
+*rsa*
+
 !.gitlab-ci.*
 
 !.gitignore
