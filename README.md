@@ -238,9 +238,72 @@ Test the local deployment
 
 ![api2](./img/postman.PNG)
 
-## Docker orchestration using Kubernetes
+## Container orchestration using Kubernetes
 
-...
+### The application tier
+
+[webapp.yml](./k8s/webapp.yml)
+
+Our application component will consist of a `Deployment` and a `Service`
+
+- **Deploymnent**: Creates and runs the webapp Pod.
+
+- **Service**: Allow Pods be accessible to other Pods or users outside the cluster.
+
+### The database tier
+
+Review the resource definitions [mongo.yml](./k8s/mongo.yml). The database component consists of a `PersistentVolumeClaim`, a `Service` and `Deployment` definitions.
+
+- **PersistentVolumeClaim**: Allows obtaining persistent storage volume.
+
+- **Service**: Without a `type` field, Kubernetes assigns it the default type ClusterIP. Thus the Pod accessible from within the cluster and not from outside.
+
+- **Deployment**: In the deployment we define a storage volume named `storage`, which references the PersistentVolumeClaim. The volume is referenced from the `volumeMounts` field which mounts the referenced volume at the path (`/data/db`). This is the path where MongoDB saves the data.
+
+### Deploy the application
+
+From the root directory of the project run:
+
+```
+kubectl apply -f k8s
+```
+
+Check the deployment
+
+```
+kubectl get deployments
+```
+
+![deployments](./img/kubectl-deployments.PNG)
+
+Check the Pods
+
+![pods](./img/kubectl-pods.PNG)
+
+Check the services
+![services](./img/kubectl-service.PNG)
+
+Note that the webapp is exposed at port `21186`
+
+Get the ip of the cluster
+
+![ip](./img/minikube-ip.PNG)
+
+Open a browser at [http://172.23.136.99:32186](http://172.23.136.99:32186)
+
+![webapp](./img/test-webapp.png)
+
+Now test the api
+
+![api](./img/test-api.PNG)
+
+In case we delete the mongo pod the data are not lost due to the persistent volume claim.
+
+You can try to delete a pod `kubectl delete pod <POD_NAME>`.
+
+Test the api with a get request. The data still remain
+
+![pvc](./img/test-api-get.PNG)
 
 ## Service mesh using Istio
 
