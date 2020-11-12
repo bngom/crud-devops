@@ -195,7 +195,8 @@ Test the api
 
 ## Provision the VM with Ansible and Vagrant
 
-...
+- Provisioning servers with Vagrant and VirtualBox.
+- Provisioning applications with Ansible Playbooks.
 
 ## Build Docker image
 
