@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Mockgoose = require("mockgoose").Mockgoose;
 const mockgoose = new Mockgoose(mongoose);
-const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/shopping-list";
+const DB_URL = process.env.DB_URL || "mongodb://mongo:27017/shopping-list";
 
 function connect() {
   return new Promise((resolve, reject) => {
