@@ -104,29 +104,42 @@ Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
 ![schema](./img/schema.PNG)
 
 
-- Prerequisites
+### Prerequisites
 
 [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform)
 
-- ci/cd workflow and docker-compose
+[Install aws-cli]()
 
-* Review the pipeline configuration file [.gitlab-ci.yml](./.gitlab-ci.yml). In this file we defined the different stages:
+Configure aws access keys and secrets by running `aws configure`.
+
+> How to get access key and secret from aws:
+[here](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html)
+
+![awsconfig](./img/aws-configure.PNG)
+
+### ci/cd workflow and docker-compose
+
+Review the pipeline configuration file [.gitlab-ci.yml](./.gitlab-ci.yml). In this file we defined the different stages:
     
 **test**: when develop branch is pushed it trigger the unittest execution.
 
 **deploy**: when uat branch is pushed it trigger the deployment of the app stack to the ec2 instance where the runner is installed.
 
-* Review the file [docker-compose.yml](./docker-compose.yml)
+Review the file [docker-compose.yml](./docker-compose.yml)
 
-- Deploy an EC2 instance (T2.micro free tier)
+### Deploy an EC2 instance (T2.micro free tier)
 
 Move to the folder `iac`. The instance will be deployed on **us-esat-2** region. Feel free to change the region in the file [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf). 
 
-In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ to one region to another.
+In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ from one region to another.
 
 We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf) file.
 
-> To do: generate the key pairs with terraform and extract the private key
+> The key must be created in the same region of deployment
+
+<sub>
+To do: generate the key pairs with terraform and extract the private key
+</sub>
 
 
 Initialize
@@ -149,38 +162,56 @@ terraform apply
 
 Check on AWS is the instance is correctely provisionned
 
-- Install gitlab-runner on the EC2 instance
+![aws-instance](./img/aws-instance.PNG)
 
-Connect to the EC2 instance
+Note the public ip in our case 3.14.244.158
+
+
+### Install gitlab-runner on the EC2 instance
+
+*Connect to the EC2 instance*
+
+> Make sure the key is in the path from where you will execute the folowing command
 
 ```
-ssh -i "ec2-p2.pem" ubuntu@ec2-3-23-63-91.us-east-2.compute.amazonaws.com
+ssh -i "ec2-p2.pem" ubuntu@3.14.244.158
 ```
 
-Complete the gitlab-runner installtion
+*Complete the gitlab-runner installation *
+
+To get the url and the token, go on your project in gitlab:
+
+1. Go to Settings > CI/CD and expand the Runners section.
+2. Note the URL and token.
+
+![](./img/gitlab-runner.PNG)
 
 ```
 sudo gitlab-runner register
 ```
+* URL: https://gitlab.com/
+* Token: the token you get previously
+* Description: a brief description ...
+* Tags: uat
+* Executor: shell
 
-Follow these [instructions](https://docs.gitlab.com/ee/ci/runners/README.html#specific-runners) to register the runner
+![runner-config](./img/runner-config.PNG)
 
 Add `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file
 
 ```
 sudo nano /etc/sudoers
 ```
+![sudoers](./img/gitlab-sudoers.PNG)
+<sub>todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)</sub>
 
-> todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
-
+Go to the uat branch
 ```
-git branch develop
-git branch uat
+git checkout uat
 ```
 
 Trigger the deployment on the ec2 instance
 ```
-git checkout uat
 git push
 ```
 ![webpage](./img/app-deployed-weppage2.PNG)
