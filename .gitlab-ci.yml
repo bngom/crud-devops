@@ -38,7 +38,7 @@ step-deploy-staging:
   only:
     - master
   tags:
-    - master
+    - uat
   script:
     - echo setting up env $DYNAMIC_ENV_VAR
     - sudo docker image prune -f
