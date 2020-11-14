@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
+var start = Date.now()
+
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -16,7 +18,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome :-)" });
+
+  var today = new Date();
+
+  var date = today.getFullYear()+'-'+(today.getMonth() + 1)+'-'+today.getDate();
+
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+  var dateTime = date+' '+time;
+
+  var now = (Date.now() - start) / 1000
+
+  res.json({ message: `Web app v1 - date: ${dateTime}`});
 });
 
 require("./src/routes")(app);
