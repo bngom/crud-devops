@@ -12,6 +12,10 @@ node_modules
 # keys
 *rsa*
 
+# Terraform config
+terraform.*
+*terraform.tfstate*
+
 !.gitlab-ci.*
 
 !.gitignore
