@@ -23,12 +23,18 @@ sudo gitlab-runner start
 
 # Register Gitlab-runner
 # sudo gitlab-runner register
-sudo gitlab-runner register -n --url https://gitlab.com/ --registration-token RbgvFxTcz_P4FfxGyz4J --tag-list uat --executor shell --description "My Runner"
+# sudo gitlab-runner register -n --url https://gitlab.com/ --registration-token RbgvFxTcz_P4FfxGyz4J --tag-list uat --executor shell --description "My Runner"
+
+sudo gitlab-runner register -n \
+  --url https://gitlab.com/ \
+  --registration-token RbgvFxTcz_P4FfxGyz4J \
+  --executor shell \
+  --description "My Runner"
 
 sudo usermod -aG docker gitlab-runner
 
-echo 'gitlab-runner ALL=(ALL) NOPASSWD: ALL' >> sudo /etc/sudoers
+# sudo echo 'gitlab-runner ALL=(ALL) NOPASSWD: ALL' >> sudo /etc/sudoers
 
-sudo gitlab-runner restart
+# sudo gitlab-runner restart
 
 
