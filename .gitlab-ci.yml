@@ -41,6 +41,5 @@ step-deploy-staging:
     - uat
   script:
     - echo setting up env $DYNAMIC_ENV_VAR
-    - docker image prune -f
-    - docker-compose -f docker-compose.yml build --no-cache
-    - docker-compose -f docker-compose.yml up -d
+    - sudo docker-compose -f docker-compose.yml build --no-cache
+    - sudo docker-compose -f docker-compose.yml up -d
