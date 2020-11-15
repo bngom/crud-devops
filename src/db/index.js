@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const Mockgoose = require("mockgoose").Mockgoose;
 const mockgoose = new Mockgoose(mongoose);
-const DB_URL = process.env.DB_URL || "mongodb://mongo:27017/shopping-list";
-const DB_URL_TEST = process.env.DB_URL_TEST || "mongodb://mongo:27017/shopping-list-test";
+const MONGO_URI = process.env.DB_URL || "mongodb://mongo:27017/shopping-list";
 
 function connect() {
   return new Promise((resolve, reject) => {
@@ -10,16 +9,15 @@ function connect() {
 
     mockgoose.prepareStorage()
       .then(() => {
-        mongoose.connect(DB_URL_TEST,
+        mongoose.connect(MONGO_URI,
           { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
           .then((res, err) => {
-            console.log(res.status)
             if (err) return reject(err);
             resolve();
           })
       })
       } else {
-          mongoose.connect(DB_URL,
+          mongoose.connect(MONGO_URI,
             { useNewUrlParser: true, useCreateIndex: true })
             .then((res, err) => {
               if (err) return reject(err);
