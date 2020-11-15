@@ -2,20 +2,20 @@ provider "aws" {
 	region = "us-east-2"
 }
 
-resource "tls_private_key" "this" {
-  algorithm = "RSA"
-}
+# resource "tls_private_key" "this" {
+#   algorithm = "RSA"
+# }
 
-module "key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
+# module "key_pair" {
+#   source = "terraform-aws-modules/key-pair/aws"
 
-  key_name   = "gitlab-runner-key"
-  public_key = tls_private_key.this.public_key_openssh
-}
+#   key_name   = "gitlab-runner-key"
+#   public_key = tls_private_key.this.public_key_openssh
+# }
 
-output "ip" {
-  value = aws_eip.ip.public_ip
-}
+# output "ip" {
+#   value = aws_eip.ip.public_ip
+# }
 
 resource "aws_security_group" "basic_security" {
     

@@ -9,6 +9,13 @@ node_modules
 # vscode settings folder
 .vscode/
 
+# keys
+*rsa*
+
+# Terraform config
+terraform.*
+*terraform.tfstate*
+
 !.gitlab-ci.*
 
 !.gitignore
