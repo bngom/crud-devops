@@ -1,12 +1,14 @@
 // const mongoose = require('mongoose');
 const mongoose = require('mongoose');
-const client = require('../../../src/db/index');
-const expect = require('chai').expect;
 const Item = require('../../../src/db/model').Item;
+require('dotenv').config();
+
+const MONGO_URI = process.env.DB_URL || "mongodb://mongo:27017/shopping-list";
 
 describe('Database Tests', () => {
   before(function (done) {
-    mongoose.connect(process.env.DB_URL_TEST);
+
+    mongoose.connect(MONGO_URI);
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error'));
     db.once('open', () => {

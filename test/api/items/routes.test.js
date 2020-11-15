@@ -14,7 +14,7 @@ let item = {
   description: '200 g President', 
 };
 
-describe('POST /api/item', () => {
+describe('Test routes', () => {
     beforeEach((done) => {
       
       db.connect()
