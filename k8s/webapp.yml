@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: 230984/shopping-list_web
+          image: 230984/shopping-list-v1:1.0.0
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
