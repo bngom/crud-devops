@@ -36,8 +36,10 @@ sudo gitlab-runner register -n \
 
 sudo usermod -aG docker gitlab-runner
 
-# sudo echo 'gitlab-runner ALL=(ALL) NOPASSWD: ALL' >> sudo /etc/sudoers
+# sudo echo 'gitlab-runner ALL=(ALL) NOPASSWD: ALL' >> sudo nano /etc/sudoers
+sudo rm .bash_logout
+sudo rm ~gitlab-runner/.bash_logout
 
-# sudo gitlab-runner restart
+sudo gitlab-runner restart
 
 
