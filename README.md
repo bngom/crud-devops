@@ -211,7 +211,8 @@ vagrant box add ubuntu/trusty64
 ```
 vagrant plugin install vagrant-vbguest
 ```
-Move to the *iac* folder
+
+From the root folder of the project
 
 Run the `vagrant up` command.
 
