@@ -169,19 +169,13 @@ Note the public ip in our case 18.216.168.169
 ```
 ssh -i "ec2-p2.pem" ubuntu@EC2_PUBLIC_IP
 ```
-* URL: https://gitlab.com/
-* Token: the token you get previously
-* Description: a brief description ...
-* Tags: uat
-* Executor: shell
 
 Complete the gitlab-runner installation by adding `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file:
 
 ```
 sudo nano /etc/sudoers
 ```
-![sudoers](./img/gitlab-sudoers.PNG)
-<sub>todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)</sub>
+
 
 ![sudoers](./img/gitlab-sudoers.PNG)
 
@@ -194,20 +188,32 @@ Trigger the deployment on the ec2 instance
 ```
 git push
 ```
+
 ![webpage](./img/app-deployed-weppage2.PNG)
 
 Connect throught ssh on the ec2 instance and check the running containers
 
 ![containers](./img/app-deployed-docker.PNG)
 
-Test the api
-![api](./img/app-deployed-postman-ec2.PNG)
-
-
 ## Provision the VM with Ansible and Vagrant
 
 - Provisioning servers with Vagrant and VirtualBox.
 - Provisioning applications with Ansible Playbooks.
+
+```
+Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
+```
+
+```
+vagrant box add ubuntu/trusty64
+```
+
+```
+vagrant plugin install vagrant-vbguest
+```
+Move to the *iac* folder
+
+Run the `vagrant up` command.
 
 ## Build Docker image
 
@@ -222,8 +228,8 @@ docker build -t shopping-list-v1 .
 Push docker image to docker registry
 
 ```
-docker tag shopping-list_web 230984/shopping-list_web
-docker push 230984/shopping-list_web
+docker tag shopping-list-v1 230984/shopping-list-v1:1.0.0
+docker push 230984/shopping-list-v1:1.0.0
 ```
 ![registry](./img/docker_registry.PNG)
 
@@ -279,34 +285,35 @@ From the root directory of the project run:
 kubectl apply -f k8s
 ```
 
-Check the deployment
+Check the deployments
 
 ```
 kubectl get deployments
 ```
 
-![deployments](./img/kubectl-deployments.PNG)
-
 Check the Pods
 
-![pods](./img/kubectl-pods.PNG)
+```
+kubectl get pods
+```
 
 Check the services
-![services](./img/kubectl-service.PNG)
+```
+kubectl get services
+```
+![services](./img/kubectl-service-2.PNG)
 
-Note that the webapp is exposed at port `21186`
+Note that the webapp is exposed at port `32082`
 
-Get the ip of the cluster
+Get the ip of the cluster run `minikube ip` command
 
-![ip](./img/minikube-ip.PNG)
+Open a browser at [http://172.19.7.240:32082](http://172.19.7.240:32082)
 
-Open a browser at [http://172.23.136.99:32186](http://172.23.136.99:32186)
-
-![webapp](./img/test-webapp.png)
+![webapp](./img/kubectl-app.png)
 
 Now test the api
 
-![api](./img/test-api.PNG)
+![api](./img/test-api-2.PNG)
 
 In case we delete the mongo pod the data are not lost due to the persistent volume claim.
 
@@ -314,7 +321,7 @@ You can try to delete a pod `kubectl delete pod <POD_NAME>`.
 
 Test the api with a get request. The data still remain
 
-![pvc](./img/test-api-get.PNG)
+![pvc](./img/test-api-get-2.PNG)
 
 ## Service mesh using Istio
 
