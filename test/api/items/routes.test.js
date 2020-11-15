@@ -20,23 +20,18 @@ describe('Test routes', () => {
       db.connect()
         .then(() => done())
         .catch((err) => done(err));
-
-      //console.log("db connected!");
     });
   
     afterEach((done) => {
       db.close()
         .then(() => done())
         .catch((err) => done(err));
-      
-      //console.log("db closed!");
     });
   
     it('Create Item', (done) => {
       request(app).post('/api/item')
         .send(item)
         .then((res) => {
-          //const body = res.body;
           id = res.body._id;
           name = res.body.name;
           quantity = res.body.quantity;

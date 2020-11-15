@@ -169,12 +169,19 @@ Note the public ip in our case 18.216.168.169
 ```
 ssh -i "ec2-p2.pem" ubuntu@EC2_PUBLIC_IP
 ```
+* URL: https://gitlab.com/
+* Token: the token you get previously
+* Description: a brief description ...
+* Tags: uat
+* Executor: shell
 
 Complete the gitlab-runner installation by adding `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file:
 
 ```
 sudo nano /etc/sudoers
 ```
+![sudoers](./img/gitlab-sudoers.PNG)
+<sub>todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)</sub>
 
 ![sudoers](./img/gitlab-sudoers.PNG)
 
