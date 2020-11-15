@@ -1,0 +1,14 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: true
+  sudo_user: root
+
+  roles:
+    - role: softwares
+    - role: mongodb
+    - role: nodejs
+    - role: webapp
+      apps:
+      enabled:
+        - "/src/webapp"
