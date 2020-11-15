@@ -10,9 +10,9 @@ We will build a Shopping list CRUD Application.The back-end server uses Node.js 
 
 - Develop CRUD app: create, update, retrieve, delete an item
 - CI/CD pipeline using: github, gitlab, gitlab runner, terraform, aws ec2 instance
-- Iac using Ansible, Vagrant and Gitlab
-- Kubernetes cluster ...
-- Istio ...
+- Iac using Ansible, Vagrant and Gitlab [work in progress...]
+- Kubernetes cluster
+- Istio [to do]
 
 
 ## Instruction
