@@ -214,6 +214,8 @@ vagrant plugin install vagrant-vbguest
 
 From the root folder of the project
 
+...
+ 
 Run the `vagrant up` command.
 
 ## Build Docker image
@@ -232,7 +234,7 @@ Push docker image to docker registry
 docker tag shopping-list-v1 230984/shopping-list-v1:1.0.0
 docker push 230984/shopping-list-v1:1.0.0
 ```
-![registry](./img/docker_registry.PNG)
+![registry](./img/docker_registry-2.PNG)
 
 
 ## Docker compose
