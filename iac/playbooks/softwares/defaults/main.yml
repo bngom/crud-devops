@@ -1,9 +1,0 @@
----
-softwares:
-  - pkg-config
-  - build-essential
-  - git-core
-  - vim
-  - curl
-  - wget
-  - tree
