@@ -6,7 +6,7 @@ Shopping list CRUD Application.
 
 We will build a Shopping list CRUD Application.The back-end server uses Node.js + Express for REST APIs. MongoDB is used for the persistence layer.
 
-## List of all the work performed (briefly, describing features and bonus tasks).
+### List of all the work performed (briefly, describing features and bonus tasks).
 
 - Develop CRUD app: create, update, retrieve, delete an item
 - CI/CD pipeline using: github, gitlab, gitlab runner, terraform, aws ec2 instance
@@ -17,16 +17,12 @@ We will build a Shopping list CRUD Application.The back-end server uses Node.js 
 
 ## Instruction
 
-- MongoDB
+[Download](https://www.mongodb.com/try/download/community) and install MongoDB Community Server.
 
-[Download](https://www.mongodb.com/try/download/community) and install MongoDB Community Server
-
-- Webapp
-
-clone the repository
+Clone the repository
 
 ```
-git clone https://github.com/bngom/shopping-list.git
+git clone git@gitlab.com:bngom/shopping-list.git
 ```
 
 From the root directory of the project run:
@@ -91,7 +87,7 @@ Delete all items
 curl --location --request DELETE 'http://localhost:8080/api/item/'
 ```
 
-- Testing
+### Testing
 
 ```
 npm test
@@ -104,30 +100,44 @@ Github -> GitLab <- AWS EC2 Instance (Gitlab Runner)<- Terraform
 ![schema](./img/schema.PNG)
 
 
-- Prerequisites
+### Prerequisites
 
 [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform)
 
-- ci/cd workflow and docker-compose
+[Install aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 
-* Review the pipeline configuration file [.gitlab-ci.yml](./.gitlab-ci.yml). In this file we defined the different stages:
+Configure aws access keys and secrets by running `aws configure`.
+
+> [Here](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) how to get access key and secret from aws.
+
+![awsconfig](./img/aws-configure.PNG)
+
+### CI/CD Pipeline
+
+Review the pipeline configuration file [.gitlab-ci.yml](./.gitlab-ci.yml). In this file we defined the different stages:
     
 **test**: when develop branch is pushed it trigger the unittest execution.
 
-**deploy**: when uat branch is pushed it trigger the deployment of the app stack to the ec2 instance where the runner is installed.
+**deploy**: when we push changes on uat branch it triggers the deployment of the app stack to the ec2 instance where the runner is installed.
 
-* Review the file [docker-compose.yml](./docker-compose.yml)
+Review the file [docker-compose.yml](./docker-compose.yml)
 
-- Deploy an EC2 instance (T2.micro free tier)
+### Deploy an EC2 instance with terraform (T2.micro free tier)
 
 Move to the folder `iac`. The instance will be deployed on **us-esat-2** region. Feel free to change the region in the file [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf). 
 
-In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ to one region to another.
 
-We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf) file.
+The bootstrap script [./iac/user_data.sh](./iac/user_data.sh) will automatically deploy packages (docker, docker-compose, gitlab-runner...) and register the runner. in that script replace the token in *the Register gitlab-runner* step by your own. To get the token, go on your project in gitlab:
 
-> To do: generate the key pairs with terraform and extract the private key
+1. Go to Settings > CI/CD and expand the Runners section.
+2. Note the token.
 
+![](./img/gitlab-runner.PNG)
+
+
+> - In case you change the region make sure to change the ami (**ami-07efac79022b86107**). It differ from one region to another. 
+
+> - We deploy the instance using an existing aws key-pair named `ec2-p2`, generate your own on aws (**Service > EC2 > Key pairs > Create Key pair**) and update the [./iac/gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf) file.**The key must be created in the same region of deployment**.
 
 Initialize
 
@@ -141,46 +151,40 @@ Check the deployment plan
 terraform plan
 ```
 
-Provision an EC2 instance
+Provision an EC2 instance.
 
 ```
 terraform apply
 ```
 
-Check on AWS is the instance is correctely provisionned
+Check on AWS if the instance is correctely provisionned
 
-- Install gitlab-runner on the EC2 instance
+![aws-instance](./img/ec2-running-2.PNG)
 
-Connect to the EC2 instance
+Note the public ip in our case 18.216.168.169
 
-```
-ssh -i "ec2-p2.pem" ubuntu@ec2-3-23-63-91.us-east-2.compute.amazonaws.com
-```
+*ssh connect to the EC2 instance*
 
-Complete the gitlab-runner installtion
 
 ```
-sudo gitlab-runner register
+ssh -i "ec2-p2.pem" ubuntu@EC2_PUBLIC_IP
 ```
 
-Follow these [instructions](https://docs.gitlab.com/ee/ci/runners/README.html#specific-runners) to register the runner
-
-Add `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file
+Complete the gitlab-runner installation by adding `gitlab-runner ALL=(ALL) NOPASSWD: ALL` at the end of the sudoers file:
 
 ```
 sudo nano /etc/sudoers
 ```
 
-> todo: make the gitlab-runner registration automatic in: [gitlab-runner-instance.tf](./iac/gitlab-runner-instance.tf)
+![sudoers](./img/gitlab-sudoers.PNG)
 
+Go to the uat branch
 ```
-git branch develop
-git branch uat
+git checkout uat
 ```
 
 Trigger the deployment on the ec2 instance
 ```
-git checkout uat
 git push
 ```
 ![webpage](./img/app-deployed-weppage2.PNG)
@@ -205,7 +209,7 @@ Review the [Dockerfile](./Dockerfile)
 Build the docker image
 
 ```
-docker build -t shopping-list_web .
+docker build -t shopping-list-v1 .
 ```
 
 Push docker image to docker registry
