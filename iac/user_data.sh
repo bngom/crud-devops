@@ -29,6 +29,7 @@ sudo gitlab-runner start
 # Register gitlab-runner
 sudo gitlab-runner register -n \
   --url https://gitlab.com/ \
+  --tag-list uat \
   --registration-token RbgvFxTcz_P4FfxGyz4J \
   --executor shell \
   --description "My Runner"
