@@ -1,0 +1,14 @@
+---
+- hosts: webapp2
+  # Run commands as root
+  become: true
+  # Roles to be executed on these hosts
+  roles:
+  - role: gitlab/install
+    tags: install
+    apps:
+      enabled:
+        - "/vagrant/"
+
+  - role: gitlab/healthchecks
+    tags: check

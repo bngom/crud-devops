@@ -1,0 +1,53 @@
+---
+- name: Install prerequisites
+  action: apt pkg={{item}} state=latest update-cache=yes
+  with_items:
+  - pkg-config
+  - build-essential
+  - git-core
+  - vim
+  - curl
+  - wget
+  - tree
+
+- name: install node
+  shell: |
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
+
+- name: install mongoDB
+  apt: 
+    name: mongodb
+    state: present
+    update_cache: yes
+
+- name: ensure mongodb is running
+  service:
+    name: mongodb
+    state: started
+
+# - name: Install grunt-cli package globally
+#   npm: name=grunt-cli global=yes state=present
+
+# - name: Install forever package globally
+#   npm: name=forever global=yes state=present
+
+- name: Install npm global packages
+  npm: name=global-packages global=yes state=present
+  with_items: global-packages
+
+- name: copy source code
+  copy: src=/vagrant/ dest=/home/app/ remote_src=yes
+
+- name: NPM Install package.json
+  command: npm install
+  args:
+    chdir: "/home/app/"
+
+- name: NPM start
+  command: npm start
+  args:
+    chdir: "/home/app/"
+  async: 42
+  poll: 0
+  become: yes
+  become_user: root
