@@ -212,11 +212,19 @@ vagrant box add ubuntu/trusty64
 vagrant plugin install vagrant-vbguest
 ```
 
-From the root folder of the project
+move to *iac* folder
 
 ...
  
 Run the `vagrant up` command.
+
+
+
+Server is running at [20.20.20.2:8080](http://20.20.20.2:8080)
+
+![](./img/ansible.PNG)
+
+You can connect through ssh `ssh vagrant@127.0.0.1 -p 2222`. The password is `vagrant`
 
 ## Build Docker image
 
