@@ -1,5 +1,5 @@
 ---
-- hosts: webapp2
+- hosts: webapp
   # Run commands as root
   become: true
   # Roles to be executed on these hosts
