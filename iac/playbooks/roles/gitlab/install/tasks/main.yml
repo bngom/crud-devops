@@ -39,7 +39,7 @@
   copy: src=/vagrant/ dest=/home/app/ remote_src=yes
 
 - name: NPM Install package.json
-  command: npm start
+  command: npm install
   args:
     chdir: "/home/app/"
 
@@ -47,7 +47,7 @@
   command: npm start
   args:
     chdir: "/home/app/"
-  async: 42
-  poll: 0
-  become: yes
-  become_user: root
+  # async: 42
+  # poll: 0
+  # become: yes
+  # become_user: root
