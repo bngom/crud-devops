@@ -39,7 +39,7 @@
   copy: src=/vagrant/ dest=/home/app/ remote_src=yes
 
 - name: NPM Install package.json
-  command: npm install
+  command: npm start
   args:
     chdir: "/home/app/"
 
