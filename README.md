@@ -367,13 +367,25 @@ admin
 
 To allow istio inject sidecars foeach pod deployed, label the default namespace
 ```
-istio/4-label-default-namespace.yaml
+kubectl apply -f istio/4-label-default-namespace.yaml
 ```
 
 Deploy the application
 
 ```
-kubectl apply -f k8s
+kubectl apply -f k8s/mongo-pvc.yaml
+kubectl apply -f k8s/mongo-service.yaml
+kubectl apply -f k8s/mongo.yaml
+```
+
+### Canaries Releases
+
+```
+kubectl apply -f istio/5-webapp-canary.yaml
+```
+
+```
+kubectl apply -f istio/6-istio-rules.yaml
 ```
 
 Kiali is running on port `31000`
@@ -384,9 +396,20 @@ get the ip of your cluster
 minikube ip
 ```
 
-Open a browser at [http://172.26.58.76:31000/](http://172.26.58.76:31000/)
+Open a browser at `http://<YOUR-CLUSTER-IP>:31000`
 
-![](img/kiali-web-2.PNG)
+
+
+![](img/canary-2.PNG)
+
+
+### Distributed tracing with JAEGER
+
+> Comming soon...Need to add to some logic to propagate header `x-request-id` over the data plane.
+
+### Some metrics with graphana
+
+Open a browser at `http://<YOUR-CLUSTER-IP>:31002`
 
 ## Author
 
