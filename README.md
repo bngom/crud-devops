@@ -403,6 +403,11 @@ Open a browser at `http://<YOUR-CLUSTER-IP>:31000`
 ![](img/canary-2.PNG)
 
 
+### Canaries Release with KIALI UI
+
+
+![](img/canary.gif)
+
 ### Distributed tracing with JAEGER
 
 > Comming soon...Need to add to some logic to propagate header `x-request-id` over the data plane.
