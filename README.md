@@ -336,7 +336,57 @@ Test the api with a get request. The data still remain
 
 ## Service mesh using Istio
 
-...
+Clean up
+
+```
+minikube delete
+```
+
+```
+minikube start
+```
+
+Deploy istio stack
+
+```
+kubectl apply -f istio/1-istio-init.yaml
+```
+
+```
+kubectl apply -f istio/2-istio-minikube.yaml
+```
+Setup a username and passphrase for kiali. 
+```
+kubectl apply -f istio/3-kiali-secret.yaml
+```
+> Look at the file and notice that the username and password for kiali is just a base64 encoded string. The login is `admin` and the password `admin`
+```
+$ echo YWRtaW4= | base64 -d
+admin
+```
+
+To allow istio inject sidecars foeach pod deployed, label the default namespace
+```
+istio/4-label-default-namespace.yaml
+```
+
+Deploy the application
+
+```
+kubectl apply -f k8s
+```
+
+Kiali is running on port `31000`
+![](img/kiali.PNG)
+
+get the ip of your cluster
+```
+minikube ip
+```
+
+Open a browser at [http://172.26.58.76:31000/](http://172.26.58.76:31000/)
+
+![](img/kiali-web-2.PNG)
 
 ## Author
 
