@@ -1,4 +1,4 @@
-# Shopping list web app
+# DevOps, CI/CD, Infrastructure as Code, Cloud
 
 [![gitlab-ci](https://gitlab.com/bngom/shopping-list/badges/uat/pipeline.svg)](https://gitlab.com/bngom/shopping-list)
 
